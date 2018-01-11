@@ -17,13 +17,9 @@ public class Biblioteca {
     }
 
     public void listBooks() {
-        //String allBooks;
-
         for (Book book : books) {
             book.displayDetails(printStream);
         }
-
-        //printStream.
 
     }
 }
