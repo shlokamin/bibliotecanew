@@ -29,8 +29,8 @@ public class WelcomeMessageTests {
     public void shouldDisplayBooksAfterWelcomeMessage() {
         biblioteca.listBooks();
 
-        verify(printstream).println("Harry Potter");
-        verify(printstream).println("Lord of the Rings");
+        verify(printstream).println("Harry Potter | J.K. Rowling | 1995");
+        verify(printstream).println("Lord of the Rings | Tolkien | 1970");
 
 
     }

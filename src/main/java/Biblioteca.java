@@ -3,13 +3,13 @@ import java.util.ArrayList;
 
 public class Biblioteca {
     private PrintStream printStream;
-    private ArrayList<String> books;
+    private ArrayList<Book> books;
 
     public Biblioteca(PrintStream printStream) {
         this.printStream = printStream;
         books = new ArrayList<>();
-        books.add("Harry Potter");
-        books.add("Lord of the Rings");
+        books.add(new Book("Harry Potter", "J.K. Rowling", "1995"));
+        books.add(new Book("Lord of the Rings", "Tolkien", "1970"));
     }
 
     public void displayWelcomeMessage() {
@@ -19,8 +19,8 @@ public class Biblioteca {
     public void listBooks() {
         //String allBooks;
 
-        for (String book : books) {
-            printStream.println(book);
+        for (Book book : books) {
+            book.displayDetails(printStream);
         }
 
         //printStream.
