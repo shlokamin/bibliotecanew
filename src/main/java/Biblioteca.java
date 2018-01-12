@@ -7,20 +7,15 @@ import java.util.Scanner;
 
 public class Biblioteca {
     private PrintStream printStream;
+    private BufferedReader bufferedReader;
     private ArrayList<Book> books;
     private Menu menu;
-    private BufferedReader bufferedReader;
-
 
     public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, ArrayList<Book> books) {
         this.printStream = printStream;
-        this.books = books;
         this.bufferedReader = bufferedReader;
+        this.books = books;
         this.menu = new Menu(printStream,bufferedReader,new String[] {"List Books"});
-    }
-
-    public Menu getMenu() {
-        return menu;
     }
 
     public void displayWelcomeMessage() {
@@ -35,30 +30,29 @@ public class Biblioteca {
         printStream.println(s.toString());
     }
 
-    public void init() {
+    public void init() throws IOException {
         displayWelcomeMessage();
-        listBooks();
+        printStream.println("Menu Options: ");
+        carryOutMenuSelection();
     }
 
     public void quit() throws IOException {
+        printStream.println("Thank you! Goodbye");
         bufferedReader.close();
         printStream.close();
-        printStream.println("Thank you! Goodbye");
     }
 
     public void carryOutMenuSelection() throws IOException {
         menu.displayOptions();
         String input = menu.getUserOption();
-        if (input.equals("Quit")) {
-            quit();
-            return;
+        while (!(input.equals("Quit"))) {
+            if (input.equals("1")) listBooks();
+            input = menu.getUserOption();
         }
-        if (input.equals("1")){
-            listBooks();
-        }
+        quit();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Book book = new Book("Harry Potter", "J.K. Rowling", "1995");
         Book book2 = new Book("The Chamber of Secrets", "J.K. Rowling", "1996");
         ArrayList<Book> books = new ArrayList<>();
