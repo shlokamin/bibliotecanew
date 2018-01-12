@@ -1,13 +1,24 @@
 import org.junit.Test;
 
+import java.io.PrintStream;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 public class MainMenuTests {
 
     @Test
     public void menuShouldDisplay(){
         String[] options = {"List Books"};
-        Menu menu = new Menu(options);
+        PrintStream printStream = mock(PrintStream.class);
+        Menu menu = new Menu(printStream,options);
 
-        String expectedOutput = "List Books";
+
+        menu.displayOptions();
+
+        verify(printStream).println("1: List Books");
 
     }
+
+
 }
