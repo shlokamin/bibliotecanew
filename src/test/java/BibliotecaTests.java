@@ -35,5 +35,11 @@ public class BibliotecaTests {
 
     }
 
+    @Test
+    public void whenUserSelectsListBooksListBooksIsCalled(){
+        biblioteca.carryOutMenuSelection(1);
+        verify(printstream).println("Harry Potter | J.K. Rowling | 1995\n" + "Lord of the Rings | Tolkien | 1970\n");
+    }
+
 
 }
