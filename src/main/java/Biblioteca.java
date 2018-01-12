@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -39,10 +40,20 @@ public class Biblioteca {
         listBooks();
     }
 
-    public void carryOutMenuSelection() {
+    public void quit() throws IOException {
+        bufferedReader.close();
+        printStream.close();
+        printStream.println("Thank you! Goodbye");
+    }
+
+    public void carryOutMenuSelection() throws IOException {
         menu.displayOptions();
         String input = menu.getUserOption();
-        if(input.equals("1")){
+        if (input.equals("Quit")) {
+            quit();
+            return;
+        }
+        if (input.equals("1")){
             listBooks();
         }
     }
@@ -58,4 +69,5 @@ public class Biblioteca {
         biblioteca.init();
 
     }
+
 }

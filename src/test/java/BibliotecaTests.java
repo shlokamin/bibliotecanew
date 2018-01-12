@@ -46,5 +46,10 @@ public class BibliotecaTests {
         verify(printstream).println("Harry Potter | J.K. Rowling | 1995\n" + "Lord of the Rings | Tolkien | 1970\n");
     }
 
-
+    @Test
+    public void shouldExitMenuWhenUserInputIsQuit() throws IOException {
+        when(bufferedReader.readLine()).thenReturn("Quit");
+        biblioteca.quit();
+        verify(printstream).println("Thank you! Goodbye");
+    }
 }

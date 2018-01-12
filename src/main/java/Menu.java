@@ -27,6 +27,7 @@ public class Menu {
         while(true){
             try {
                 input = bufferedReader.readLine();
+                if (input.equals("Quit")) return input;
                 try {
                     int optionNumber = Integer.parseInt(input);
                     if (optionNumber < 1 || optionNumber > options.length) {
