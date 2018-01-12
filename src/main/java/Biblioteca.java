@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,14 +8,14 @@ public class Biblioteca {
     private PrintStream printStream;
     private ArrayList<Book> books;
     private Menu menu;
-    private Scanner scanner;
+    private BufferedReader bufferedReader;
 
 
-    public Biblioteca(PrintStream printStream, ArrayList<Book> books) {
+    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, ArrayList<Book> books) {
         this.printStream = printStream;
         this.books = books;
-        this.scanner = new Scanner(System.in);
-        this.menu = new Menu(printStream,new String[] {"List Books"},scanner);
+        this.bufferedReader = bufferedReader;
+        this.menu = new Menu(printStream,bufferedReader,new String[] {"List Books"});
     }
 
     public Menu getMenu() {
@@ -35,11 +37,14 @@ public class Biblioteca {
     public void init() {
         displayWelcomeMessage();
         listBooks();
-        int userOption = menu.getUserOption();
     }
 
-    public void carryOutMenuSelection(int i) {
-        if (i == 1) listBooks();
+    public void carryOutMenuSelection() {
+        menu.displayOptions();
+        String input = menu.getUserOption();
+        if(input.equals("1")){
+            listBooks();
+        }
     }
 
     public static void main(String[] args) {
@@ -49,9 +54,8 @@ public class Biblioteca {
         books.add(book);
         books.add(book2);
 
-        Biblioteca biblioteca = new Biblioteca(System.out,books);
+        Biblioteca biblioteca = new Biblioteca(System.out, new BufferedReader(new InputStreamReader(System.in)), books);
         biblioteca.init();
-
 
     }
 }
