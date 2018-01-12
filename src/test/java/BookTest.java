@@ -9,15 +9,11 @@ import static org.mockito.Mockito.verify;
 public class BookTest {
 
     @Test
-    public void bookDisplaysDetails(){
+    public void shouldFormatBookDetailsToString(){
         PrintStream printStream = mock(PrintStream.class);
         Book book = new Book("Harry Potter", "J.K. Rowling", "1995");
-
         String bookDetails = "Harry Potter | J.K. Rowling | 1995";
-
-        book.displayDetails(printStream);
-
-        verify(printStream).println(bookDetails);
+        assertEquals(book.toString(), bookDetails);
     }
 
 }

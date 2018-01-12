@@ -29,13 +29,9 @@ public class BibliotecaTests {
     }
 
     @Test
-    public void shouldDisplayBooksAfterWelcomeMessage() {
+    public void shouldDisplayBookDetails() {
         biblioteca.listBooks();
-
-
-        verify(printstream).println("Harry Potter | J.K. Rowling | 1995");
-        verify(printstream).println("Lord of the Rings | Tolkien | 1970");
-
+        verify(printstream).println("Harry Potter | J.K. Rowling | 1995\n" + "Lord of the Rings | Tolkien | 1970\n");
 
     }
 

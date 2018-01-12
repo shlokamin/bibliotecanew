@@ -11,8 +11,8 @@ public class Book {
         this.yearPublished = yearPublished;
     }
 
-    public void displayDetails(PrintStream printStream) {
-        printStream.println(title + " | " + author + " | " + yearPublished);
+    public String toString() {
+        return (title + " | " + author + " | " + yearPublished);
 
     }
 }
