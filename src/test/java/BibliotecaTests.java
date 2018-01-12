@@ -13,7 +13,10 @@ public class BibliotecaTests {
     @Before
     public void setUp()throws Exception{
         printstream = mock(PrintStream.class);
-        biblioteca = new Biblioteca(printstream);
+        ArrayList<Book> books = new ArrayList<>();
+        books.add(new Book("Harry Potter", "J.K. Rowling", "1995"));
+        books.add(new Book("Lord of the Rings", "Tolkien", "1970"));
+        biblioteca = new Biblioteca(printstream, books);
     }
 
     @Test
@@ -28,6 +31,7 @@ public class BibliotecaTests {
     @Test
     public void shouldDisplayBooksAfterWelcomeMessage() {
         biblioteca.listBooks();
+
 
         verify(printstream).println("Harry Potter | J.K. Rowling | 1995");
         verify(printstream).println("Lord of the Rings | Tolkien | 1970");
