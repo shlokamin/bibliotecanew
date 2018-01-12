@@ -1,9 +1,12 @@
 import org.junit.Test;
 
 import java.io.PrintStream;
+import java.util.Scanner;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+
+
+
 
 public class MainMenuTests {
 
@@ -19,16 +22,18 @@ public class MainMenuTests {
         verify(printStream).println("1: List Books");
 
     }
-    @Test
-    public void whenUserSelectsListBooksListBooksIsCalled(){
-        String[] options = {"List Books"};
-        PrintStream printStream = mock(PrintStream.class);
-        Menu menu = new Menu(printStream,options);
-        menu.displayOptions();
-
-
-
-    }
+//    @Test
+//    public void whenUserSelectsListBooksListBooksIsCalled(){
+//
+//        Biblioteca biblioteca = mock(Biblioteca.class);
+//        String[] options = {"List Books"};
+//        PrintStream printStream = mock(PrintStream.class);
+//        Menu menu = new Menu(printStream,options);
+//        menu.requestOptionSelection();
+//        verify(biblioteca.listBooks();
+//
+//
+//    }
 
 
 }

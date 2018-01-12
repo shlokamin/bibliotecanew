@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Biblioteca {
     private PrintStream printStream;
     private ArrayList<Book> books;
+    private Menu menu;
 
     public Biblioteca(PrintStream printStream, ArrayList<Book> books) {
         this.printStream = printStream;
@@ -28,5 +29,7 @@ public class Biblioteca {
     public void init() {
         displayWelcomeMessage();
         listBooks();
+        String[] options = {"List Books"};
+        this.menu = new Menu(printStream,options);
     }
 }
