@@ -15,7 +15,8 @@ public class Biblioteca {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.books = books;
-        this.menu = new Menu(printStream,bufferedReader,new String[] {"List Books"});
+        String[] options = new String[] {"List Books", "Checkout item"};
+        this.menu = new Menu(printStream,bufferedReader,options);
     }
 
     public void displayWelcomeMessage() {
@@ -28,6 +29,11 @@ public class Biblioteca {
             s.append(book.toString() + "\n");
         }
         printStream.println(s.toString());
+    }
+
+    public void checkOutItem() {
+        printStream.println("Checkout that item");
+        return;
     }
 
     public void init() throws IOException {
@@ -46,7 +52,16 @@ public class Biblioteca {
         menu.displayOptions();
         String input = menu.getUserOption();
         while (!(input.equals("Quit"))) {
-            if (input.equals("1")) listBooks();
+            if (input.equals("1")){
+                listBooks();
+            }
+            else if (input.equals("2")){
+                checkOutItem();
+                break;
+            }
+            else {
+                return;
+            }
             input = menu.getUserOption();
         }
         quit();

@@ -52,7 +52,6 @@ public class MainMenuTests {
     @Test
     public void shouldThrowErrorIfUserNumericInputIsOutOfOptionsRange() throws IOException {
         when(bufferedReader.readLine()).thenReturn("3");
-
         menu.getUserOption();
         verify(printStream).println("Select a valid option!");
     }

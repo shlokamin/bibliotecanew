@@ -15,15 +15,15 @@ public class Menu {
     }
     
     public void displayOptions() {
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < options.length; i++) {
-            printStream.println(i+1 + ": " + options[i]);
+            s.append(i+1 + ": " + options[i] + "\n");
         }
+        printStream.println(s.toString());
     }
 
     public String getUserOption() {
-        //displayOptions();
         String input = null;
-
         while(true){
             try {
                 input = bufferedReader.readLine();
@@ -33,18 +33,14 @@ public class Menu {
                     if (optionNumber < 1 || optionNumber > options.length) {
                         printStream.println("Select a valid option!");
                     }
-                    else{
-                        return input;
-                    }
+                    else return input;
                 } catch (NumberFormatException e) {
                     printStream.println("Select a valid option!");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
     public int getOptionsLength() {
