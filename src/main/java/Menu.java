@@ -24,20 +24,29 @@ public class Menu {
         //displayOptions();
         String input = null;
 
-        try {
-            input = bufferedReader.readLine();
+        while(true){
             try {
-                int optionNumber = Integer.parseInt(input);
-                if (optionNumber < 1 || optionNumber > options.length) {
+                input = bufferedReader.readLine();
+                try {
+                    int optionNumber = Integer.parseInt(input);
+                    if (optionNumber < 1 || optionNumber > options.length) {
+                        printStream.println("Select a valid option!");
+                    }
+                    else{
+                        return input;
+                    }
+                } catch (NumberFormatException e) {
                     printStream.println("Select a valid option!");
                 }
-            } catch (NumberFormatException e) {
-                printStream.println("Select a valid option!");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
 
-        return input;
+    }
+
+    public int getOptionsLength() {
+        return options.length;
     }
 }
