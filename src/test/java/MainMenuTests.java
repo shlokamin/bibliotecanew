@@ -19,6 +19,16 @@ public class MainMenuTests {
         verify(printStream).println("1: List Books");
 
     }
+    @Test
+    public void whenUserSelectsListBooksListBooksIsCalled(){
+        String[] options = {"List Books"};
+        PrintStream printStream = mock(PrintStream.class);
+        Menu menu = new Menu(printStream,options);
+        menu.displayOptions();
+
+
+
+    }
 
 
 }
