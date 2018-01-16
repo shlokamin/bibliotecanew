@@ -29,17 +29,16 @@ public class Menu {
             try {
                 input = bufferedReader.readLine();
                 if (input.equals("Quit")) return input;
-                try {
-                    int optionNumber = Integer.parseInt(input);
-                    if (optionNumber < 1 || optionNumber > options.length) {
-                        printStream.println("Select a valid option!");
-                    }
-                    else return input;
-                } catch (NumberFormatException e) {
+
+                int optionNumber = Integer.parseInt(input);
+                if (optionNumber < 1 || optionNumber > options.length) {
                     printStream.println("Select a valid option!");
                 }
-            } catch (IOException e) {
+                else return input;
+            } catch (IOException e){
                 e.printStackTrace();
+            }catch (NumberFormatException e) {
+                printStream.println("Select a valid option!");
             }
         }
     }
