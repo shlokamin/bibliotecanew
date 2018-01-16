@@ -40,9 +40,10 @@ public class BibliotecaTests {
 
     @Test
     public void whenUserSelectsListBooksListBooksIsCalled() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("1");
+        when(bufferedReader.readLine()).thenReturn("1", "Quit");
         biblioteca.carryOutMenuSelection();
         verify(printStream).println("Harry Potter | J.K. Rowling | 1995\n" + "Lord of the Rings | Tolkien | 1970\n");
+        verify(printStream).println("Thank you! Goodbye");
     }
 
     @Test
@@ -54,8 +55,9 @@ public class BibliotecaTests {
 
     @Test
     public void shouldPrintCheckoutWhenUserSelectsCheckoutOnMenu() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("2");
+        when(bufferedReader.readLine()).thenReturn("2", "Quit");
         biblioteca.carryOutMenuSelection();
         verify(printStream).println("Checkout that item");
+        verify(printStream).println("Thank you! Goodbye");
     }
 }

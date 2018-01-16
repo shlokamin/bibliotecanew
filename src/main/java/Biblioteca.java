@@ -33,7 +33,6 @@ public class Biblioteca {
 
     public void checkOutItem() {
         printStream.println("Checkout that item");
-        return;
     }
 
     public void init() throws IOException {
@@ -49,19 +48,12 @@ public class Biblioteca {
     }
 
     public void carryOutMenuSelection() throws IOException {
-        menu.displayOptions();
+//        menu.displayOptions();
         String input = menu.getUserOption();
         while (!(input.equals("Quit"))) {
-            if (input.equals("1")){
-                listBooks();
-            }
-            else if (input.equals("2")){
-                checkOutItem();
-                break;
-            }
-            else {
-                return;
-            }
+            if (input.equals("1")) listBooks();
+            else if (input.equals("2")) checkOutItem();
+            else return;
             input = menu.getUserOption();
         }
         quit();
