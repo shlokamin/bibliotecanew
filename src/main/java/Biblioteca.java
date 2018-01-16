@@ -34,6 +34,7 @@ public class Biblioteca {
     }
 
     public void listBooks() {
+        printStream.println("OK, here are the books:");
         StringBuilder s = new StringBuilder();
         for (Book book : books) {
             s.append(book.toString() + "\n");
@@ -42,6 +43,7 @@ public class Biblioteca {
     }
 
     public void checkOutItem() {
+        printStream.println("Check out a book by typing in the book id:");
         int bookId = getValidUserInput();
         if (getValidIds().contains(bookId)) {
             if (!getBookById(bookId).isAvailable()) {
@@ -56,6 +58,7 @@ public class Biblioteca {
     }
 
     private void returnBook() {
+        printStream.println("Return a book by typing in the book id:");
         int bookId = getValidUserInput();
         if (getValidIds().contains(bookId)) {
             if (getBookById(bookId).isAvailable()) {
@@ -94,12 +97,11 @@ public class Biblioteca {
 
     public void makeBookAvailable(int bookId) {
         getBookById(bookId).setAvailable();
-
     }
 
     public void init() throws IOException {
         displayWelcomeMessage();
-        printStream.println("Menu Options: ");
+        printStream.println("Select a Menu Item: ");
         carryOutMenuSelection();
     }
 
@@ -110,31 +112,33 @@ public class Biblioteca {
     }
 
     public void carryOutMenuSelection() throws IOException {
-//        menu.displayOptions();
+        menu.displayOptions();
         String input = menu.getUserOption();
         while (!(input.equals("Quit"))) {
             if (input.equals("1")) listBooks();
             else if (input.equals("2")) checkOutItem();
             else if (input.equals("3")) returnBook();
             else return;
+            printStream.println("Make another menu selection");
             input = menu.getUserOption();
         }
         quit();
     }
 
+    public Book getBookById(int i) {
+        return books.get(0);
+    }
+
     public static void main(String[] args) throws IOException {
         Book book = new Book("Harry Potter", "J.K. Rowling", "1995",1);
         Book book2 = new Book("The Chamber of Secrets", "J.K. Rowling", "1996",2);
+        Book book3 = new Book("The Prisoner of Azkaban", "J.K. Rowling", "1998",3);
         ArrayList<Book> books = new ArrayList<>();
         books.add(book);
         books.add(book2);
+        books.add(book3);
 
         Biblioteca biblioteca = new Biblioteca(System.out, new BufferedReader(new InputStreamReader(System.in)), books);
         biblioteca.init();
-
-    }
-
-    public Book getBookById(int i) {
-        return books.get(0);
     }
 }

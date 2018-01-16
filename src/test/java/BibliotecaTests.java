@@ -58,6 +58,7 @@ public class BibliotecaTests {
     public void shouldPrintCheckoutWhenUserSelectsCheckoutOnMenu() throws IOException {
         when(bufferedReader.readLine()).thenReturn("2", "1", "Quit");
         biblioteca.carryOutMenuSelection();
+        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
         verify(printStream).println("Thank you! Enjoy the book");
         verify(printStream).println("Thank you! Goodbye");
     }
@@ -103,8 +104,10 @@ public class BibliotecaTests {
         biblioteca.makeBookUnavailable(2);
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
+        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
         verify(printStream).println("Thank you for returning the book.");
         verify(printStream).println("Thank you! Goodbye");
+
     }
 
     @Test
@@ -112,8 +115,10 @@ public class BibliotecaTests {
         biblioteca.makeBookAvailable(2);
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
+        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
         verify(printStream).println("That is not a valid book to return.");
         verify(printStream).println("Thank you! Goodbye");
+
     }
 
     @Test
@@ -123,5 +128,4 @@ public class BibliotecaTests {
         biblioteca.carryOutMenuSelection();
         assertEquals(biblioteca.getBookById(2).isAvailable(), true);
     }
-
 }

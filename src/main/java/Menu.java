@@ -19,6 +19,7 @@ public class Menu {
         for (int i = 0; i < options.length; i++) {
             s.append(i+1 + ": " + options[i] + "\n");
         }
+        s.append("type \"Quit\" to end.");
         printStream.println(s.toString());
     }
 

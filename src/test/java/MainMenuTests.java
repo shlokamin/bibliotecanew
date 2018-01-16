@@ -31,7 +31,7 @@ public class MainMenuTests {
     @Test
     public void menuShouldDisplayOptions(){
         menu.displayOptions();
-        verify(printStream).println("1: List Books\n");
+        verify(printStream).println("1: List Books\ntype \"Quit\" to end.");
     }
 
     @Test
