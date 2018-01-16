@@ -31,7 +31,7 @@ public class MainMenuTests {
     @Test
     public void menuShouldDisplayOptions(){
         menu.displayOptions();
-        verify(printStream).println("1: List Books");
+        verify(printStream).println("1: List Books\n");
     }
 
     @Test
@@ -44,28 +44,24 @@ public class MainMenuTests {
 
     @Test
     public void shouldThrowErrorIfUserInputIsNotNumeric() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("b");
+        when(bufferedReader.readLine()).thenReturn("b", "Quit");
         menu.getUserOption();
         verify(printStream).println("Select a valid option!");
     }
 
     @Test
     public void shouldThrowErrorIfUserNumericInputIsOutOfOptionsRange() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("3");
+        when(bufferedReader.readLine()).thenReturn("3", "Quit");
         menu.getUserOption();
         verify(printStream).println("Select a valid option!");
     }
 
     @Test
     public void shouldKeepAskingForUserInputIfInputIsInvalid() throws IOException {
-        when(bufferedReader.readLine()).thenReturn("b");
-        when(bufferedReader.readLine()).thenReturn("3");
-        when(bufferedReader.readLine()).thenReturn("1");
-
+        when(bufferedReader.readLine()).thenReturn("b", "3", "1");
         String option = menu.getUserOption();
         int optionNum = Integer.parseInt(option);
         assertEquals(optionNum,1);
     }
-
 
 }
