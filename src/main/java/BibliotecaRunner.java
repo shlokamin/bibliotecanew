@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 public class BibliotecaRunner {
     private static Biblioteca biblioteca;
 
-
     public static void main(String[] args) throws IOException {
         Inventory books = new Inventory();
         books.addBook("Harry Potter", "J.K. Rowling", "1995");
