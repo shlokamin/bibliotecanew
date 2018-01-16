@@ -4,20 +4,27 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class InventoryTest {
-    private Inventory books;
+    private Inventory media;
     @Before
     public void setUp() {
-        books = new Inventory();
-        books.addBook("a", "author a", "year a");
-        books.addBook("b", "author b", "year b");
-        books.addBook("c", "author c", "year c");
-        books.addBook("d", "author d", "year d");
+        media = new Inventory();
+        media.addBook("a", "author a", "year a");
+        media.addBook("b", "author b", "year b");
+        media.addBook("c", "author c", "year c");
+        media.addBook("d", "author d", "year d");
     }
 
     @Test
     public void shouldIncrementBookIdWithEveryAdditionalBook() {
-        books.addBook("e", "author e", "year e");
-        assertEquals(books.getBookById(5).getId(), 5);
+        media.addBook("e", "author e", "year e");
+        assertEquals(media.getMediaById(5).getId(), 5);
+    }
+
+    @Test
+    public void shouldHoldBookAndMovie() {
+        media.addMovie("f", "director f", "year f", 6);
+        assertEquals("[available] 5: f | director f | year f | 6",
+                     media.getMediaById(5).toString());
     }
 
 }

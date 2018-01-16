@@ -1,11 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
 
 public class Biblioteca {
     private PrintStream printStream;
@@ -39,7 +34,7 @@ public class Biblioteca {
         printStream.println("Check out a book by typing in the book id:");
         int bookId = getValidUserInput();
         if (books.isValidId(bookId)) {
-            if (!books.getBookById(bookId).isAvailable()) {
+            if (!books.getMediaById(bookId).isAvailable()) {
                 printStream.println("That book is not available.");
             } else {
                 makeBookUnavailable(bookId);
@@ -55,7 +50,7 @@ public class Biblioteca {
         printStream.println("Return a book by typing in the book id:");
         int bookId = getValidUserInput();
         if (books.isValidId(bookId)) {
-            if (books.getBookById(bookId).isAvailable()) {
+            if (books.getMediaById(bookId).isAvailable()) {
                 printStream.println("That is not a valid book to return.");
             } else {
                 makeBookAvailable(bookId);
@@ -86,11 +81,11 @@ public class Biblioteca {
     }
 
     public void makeBookUnavailable(int bookId) {
-        books.getBookById(bookId).setUnavailable();
+        books.getMediaById(bookId).setUnavailable();
     }
 
     public void makeBookAvailable(int bookId) {
-        books.getBookById(bookId).setAvailable();
+        books.getMediaById(bookId).setAvailable();
     }
 
     public void init() throws IOException {

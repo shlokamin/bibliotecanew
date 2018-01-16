@@ -2,42 +2,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Inventory {
-    private ArrayList<Book> books;
+    private ArrayList<Media> media;
     private int idCounter;
 
     public
     Inventory() {
-        books = new ArrayList<>();
+        media = new ArrayList<>();
         idCounter = 1;
     }
 
     public void addBook(String title, String author, String year) {
-        books.add(new Book(title, author, year, idCounter));
+        media.add(new Book(title, author, year, idCounter));
         idCounter++;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public void addMovie(String name, String director, String year, int rating) {
+        media.add(new Movie(name, director, year, rating, idCounter));
+        idCounter++;
     }
 
-    public Book getBookById(int id) {
-        return books.get(id-1);
+    public List<Media> getMedia() {
+        return media;
+    }
+
+    public Media getMediaById(int id) {
+        return media.get(id-1);
     }
 
     public int getSize() {
-        return books.size();
+        return media.size();
     }
 
     public boolean isValidId(int id) {
-        return id > 0 && id <= books.size();
+        return id > 0 && id <= media.size();
     }
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Book book : books) {
-            s.append(book.toString() + "\n");
+        for (Media medium : media) {
+            s.append(medium.toString() + "\n");
         }
         return s.toString();
     }
-
 }
