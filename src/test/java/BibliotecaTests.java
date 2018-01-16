@@ -35,7 +35,7 @@ public class BibliotecaTests {
 
     @Test
     public void shouldDisplayBookDetails() {
-        biblioteca.listBooks();
+        biblioteca.displayBooks();
         verify(printStream).println("[available] 1: Harry Potter | J.K. Rowling | 1995\n" + "[available] 2: Lord of the Rings | Tolkien | 1970\n");
     }
 

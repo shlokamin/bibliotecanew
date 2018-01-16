@@ -32,4 +32,12 @@ public class Inventory {
         return id > 0 && id <= books.size();
     }
 
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Book book : books) {
+            s.append(book.toString() + "\n");
+        }
+        return s.toString();
+    }
+
 }

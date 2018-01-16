@@ -13,16 +13,13 @@ public class Biblioteca {
     private Inventory books;
     private Menu menu;
 
-    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader) {
+    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, Inventory books) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
+
         String[] options = new String[] {"List Books", "Checkout item", "Return a Book"};
         this.menu = new Menu(printStream,bufferedReader,options);
-
-        books = new Inventory();
-        books.addBook("Harry Potter", "J.K. Rowling", "1995");
-        books.addBook("The Chamber of Secrets", "J.K. Rowling", "1996");
-        books.addBook("The Prisoner of Azkaban", "J.K. Rowling", "1998");
+        this.books = books;
     }
 
     public Inventory getBooks() {
@@ -33,13 +30,9 @@ public class Biblioteca {
         printStream.println("Welcome to Biblioteca");
     }
 
-    public void listBooks() {
+    public void displayBooks(){
         printStream.println("OK, here are the books:");
-        StringBuilder s = new StringBuilder();
-        for (Book book : books.getBooks()) {
-            s.append(book.toString() + "\n");
-        }
-        printStream.println(s.toString());
+        printStream.println(books.toString());
     }
 
     public void checkOutItem() {
@@ -55,7 +48,7 @@ public class Biblioteca {
         } else {
             printStream.println("Invalid book ID");
         }
-        listBooks();
+        displayBooks();
     }
 
     private void returnBook() {
@@ -71,7 +64,7 @@ public class Biblioteca {
         } else {
             printStream.println("Invalid book ID");
         }
-        listBooks();
+        displayBooks();
     }
 
     private int getValidUserInput() {
@@ -116,7 +109,7 @@ public class Biblioteca {
         menu.displayOptions();
         String input = menu.getUserOption();
         while (!(input.equals("Quit"))) {
-            if (input.equals("1")) listBooks();
+            if (input.equals("1")) displayBooks();
             else if (input.equals("2")) checkOutItem();
             else if (input.equals("3")) returnBook();
             else return;
