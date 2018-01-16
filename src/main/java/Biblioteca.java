@@ -10,10 +10,10 @@ import java.util.Set;
 public class Biblioteca {
     private PrintStream printStream;
     private BufferedReader bufferedReader;
-    private ArrayList<Book> books;
+    private Inventory books;
     private Menu menu;
 
-    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, ArrayList<Book> books) {
+    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, Inventory books) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.books = books;
@@ -21,22 +21,18 @@ public class Biblioteca {
         this.menu = new Menu(printStream,bufferedReader,options);
     }
 
-    public void displayWelcomeMessage() {
-        printStream.println("Welcome to Biblioteca");
+    public Inventory getBooks() {
+        return books;
     }
 
-    public Set<Integer> getValidIds() {
-        Set<Integer> ids = new HashSet<>();
-        for (int i=0;i<books.size();i++) {
-            ids.add(books.get(i).getId());
-        }
-        return ids;
+    public void displayWelcomeMessage() {
+        printStream.println("Welcome to Biblioteca");
     }
 
     public void listBooks() {
         printStream.println("OK, here are the books:");
         StringBuilder s = new StringBuilder();
-        for (Book book : books) {
+        for (Book book : books.getBooks()) {
             s.append(book.toString() + "\n");
         }
         printStream.println(s.toString());
@@ -45,8 +41,8 @@ public class Biblioteca {
     public void checkOutItem() {
         printStream.println("Check out a book by typing in the book id:");
         int bookId = getValidUserInput();
-        if (getValidIds().contains(bookId)) {
-            if (!getBookById(bookId).isAvailable()) {
+        if (books.isValidId(bookId)) {
+            if (!books.getBookById(bookId).isAvailable()) {
                 printStream.println("That book is not available.");
             } else {
                 makeBookUnavailable(bookId);
@@ -61,8 +57,8 @@ public class Biblioteca {
     private void returnBook() {
         printStream.println("Return a book by typing in the book id:");
         int bookId = getValidUserInput();
-        if (getValidIds().contains(bookId)) {
-            if (getBookById(bookId).isAvailable()) {
+        if (books.isValidId(bookId)) {
+            if (books.getBookById(bookId).isAvailable()) {
                 printStream.println("That is not a valid book to return.");
             } else {
                 makeBookAvailable(bookId);
@@ -93,11 +89,11 @@ public class Biblioteca {
     }
 
     public void makeBookUnavailable(int bookId) {
-        getBookById(bookId).setUnavailable();
+        books.getBookById(bookId).setUnavailable();
     }
 
     public void makeBookAvailable(int bookId) {
-        getBookById(bookId).setAvailable();
+        books.getBookById(bookId).setAvailable();
     }
 
     public void init() throws IOException {
@@ -126,19 +122,11 @@ public class Biblioteca {
         quit();
     }
 
-    public Book getBookById(int i) {
-        return books.get(i-1);
-    }
-
     public static void main(String[] args) throws IOException {
-        Book book = new Book("Harry Potter", "J.K. Rowling", "1995",1);
-        Book book2 = new Book("The Chamber of Secrets", "J.K. Rowling", "1996",2);
-        Book book3 = new Book("The Prisoner of Azkaban", "J.K. Rowling", "1998",3);
-        ArrayList<Book> books = new ArrayList<>();
-        books.add(book);
-        books.add(book2);
-        books.add(book3);
-
+        Inventory books = new Inventory();
+        books.addBook("Harry Potter", "J.K. Rowling", "1995");
+        books.addBook("The Chamber of Secrets", "J.K. Rowling", "1996");
+        books.addBook("The Prisoner of Azkaban", "J.K. Rowling", "1998");
         Biblioteca biblioteca = new Biblioteca(System.out, new BufferedReader(new InputStreamReader(System.in)), books);
         biblioteca.init();
     }

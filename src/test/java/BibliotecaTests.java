@@ -20,9 +20,9 @@ public class BibliotecaTests {
     public void setUp()throws Exception{
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
-        ArrayList<Book> books = new ArrayList<>();
-        books.add(new Book("Harry Potter", "J.K. Rowling", "1995",1));
-        books.add(new Book("Lord of the Rings", "Tolkien", "1970",2));
+        Inventory books = new Inventory();
+        books.addBook("Harry Potter", "J.K. Rowling", "1995");
+        books.addBook("Lord of the Rings", "Tolkien", "1970");
         biblioteca = new Biblioteca(printStream, bufferedReader, books);
     }
 
@@ -59,6 +59,7 @@ public class BibliotecaTests {
         when(bufferedReader.readLine()).thenReturn("2", "1", "Quit");
         biblioteca.carryOutMenuSelection();
         verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
+        verify(printStream).println("Check out a book by typing in the book id:");
         verify(printStream).println("Thank you! Enjoy the book");
         verify(printStream).println("Thank you! Goodbye");
     }
@@ -67,6 +68,7 @@ public class BibliotecaTests {
     public void shouldPrintSuccessMessageWhenUserChecksOutBookWithId1() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.checkOutItem();
+        verify(printStream).println("Check out a book by typing in the book id:");
         verify(printStream).println("Thank you! Enjoy the book");
     }
 
@@ -74,6 +76,7 @@ public class BibliotecaTests {
     public void shouldPrintSuccessMessageWhenUserChecksOutBookWithId2() throws IOException {
         when(bufferedReader.readLine()).thenReturn("2");
         biblioteca.checkOutItem();
+        verify(printStream).println("Check out a book by typing in the book id:");
         verify(printStream).println("Thank you! Enjoy the book");
     }
 
@@ -88,7 +91,7 @@ public class BibliotecaTests {
     public void bookShouldBecomeUnavailableWhenCheckedOut() throws IOException {
         when(bufferedReader.readLine()).thenReturn("2");
         biblioteca.checkOutItem();
-        assertEquals(biblioteca.getBookById(2).isAvailable(), false);
+        assertEquals(biblioteca.getBooks().getBookById(2).isAvailable(), false);
     }
 
     @Test
@@ -96,6 +99,7 @@ public class BibliotecaTests {
         biblioteca.makeBookUnavailable(2);
         when(bufferedReader.readLine()).thenReturn("2");
         biblioteca.checkOutItem();
+        verify(printStream).println("Check out a book by typing in the book id:");
         verify(printStream).println("That book is not available.");
     }
 
@@ -105,6 +109,7 @@ public class BibliotecaTests {
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
         verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
+        verify(printStream).println("Return a book by typing in the book id:");
         verify(printStream).println("Thank you for returning the book.");
         verify(printStream).println("Thank you! Goodbye");
 
@@ -116,6 +121,7 @@ public class BibliotecaTests {
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
         verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
+        verify(printStream).println("Return a book by typing in the book id:");
         verify(printStream).println("That is not a valid book to return.");
         verify(printStream).println("Thank you! Goodbye");
 
@@ -126,6 +132,6 @@ public class BibliotecaTests {
         biblioteca.makeBookUnavailable(2);
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
-        assertEquals(biblioteca.getBookById(2).isAvailable(), true);
+        assertEquals(biblioteca.getBooks().getBookById(2).isAvailable(), true);
     }
 }
