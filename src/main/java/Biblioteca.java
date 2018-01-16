@@ -11,12 +11,14 @@ public class Biblioteca {
     private PrintStream printStream;
     private BufferedReader bufferedReader;
     private Set<Book> books;
+    private Set<Book> unavailableBooks;
     private Menu menu;
 
     public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, Set<Book> books) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.books = books;
+        this.unavailableBooks = new HashSet<Book>();
         String[] options = new String[] {"List Books", "Checkout item", "Return a Book"};
         this.menu = new Menu(printStream,bufferedReader,options);
     }
@@ -25,13 +27,7 @@ public class Biblioteca {
         printStream.println("Welcome to Biblioteca");
     }
 
-    public Set<Integer> getValidIds() {
-        Set<Integer> ids = new HashSet<>();
-        for(Book book : books) {
-            ids.add(book.getId());
-        }
-        return ids;
-    }
+
 
     public void listBooks() {
         StringBuilder s = new StringBuilder("OK, here are the books:\n");
@@ -44,7 +40,8 @@ public class Biblioteca {
     public void checkOutItem() {
         printStream.println("Check out a book by typing in the book id:");
         int bookId = getValidUserInput();
-        if (getValidIds().contains(bookId)) {
+        Book book = getBookById(bookId);
+        if (book!=null) {
             if (!getBookById(bookId).isAvailable()) {
                 printStream.println("That book is not available.");
             } else {
@@ -59,7 +56,8 @@ public class Biblioteca {
     private void returnBook() {
         printStream.println("Return a book by typing in the book id:");
         int bookId = getValidUserInput();
-        if (getValidIds().contains(bookId)) {
+        Book book = getBookById(bookId);
+        if (book!=null) {
             if (getBookById(bookId).isAvailable()) {
                 printStream.println("That is not a valid book to return.");
             } else {
@@ -91,11 +89,17 @@ public class Biblioteca {
     }
 
     public void makeBookUnavailable(int bookId) {
-        getBookById(bookId).setUnavailable();
+        Book book = getBookById(bookId);
+        unavailableBooks.add(book);
+        books.remove(book);
+        book.setUnavailable();
     }
 
     public void makeBookAvailable(int bookId) {
-        getBookById(bookId).setAvailable();
+        Book book = getBookById(bookId);
+        unavailableBooks.remove(book);
+        books.add(book);
+        book.setAvailable();
     }
 
     public void init() throws IOException {
@@ -126,6 +130,9 @@ public class Biblioteca {
 
     public Book getBookById(int id) {
         for(Book book : books) {
+            if (id == book.getId()) return book;
+        }
+        for(Book book : unavailableBooks) {
             if (id == book.getId()) return book;
         }
         return null;

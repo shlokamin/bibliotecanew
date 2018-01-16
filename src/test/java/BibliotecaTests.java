@@ -1,4 +1,5 @@
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -9,9 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.atLeastOnce;
 
 public class BibliotecaTests {
@@ -44,10 +43,10 @@ public class BibliotecaTests {
 
     @Test
     public void whenUserSelectsListBooksListBooksIsCalled() throws IOException {
+        biblioteca = spy(biblioteca);
         when(bufferedReader.readLine()).thenReturn("1", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream,atLeastOnce()).println("OK, here are the books:\n1: Harry Potter | J.K. Rowling | 1995\n" + "2: Lord of the Rings | Tolkien | 1970\n");
-        verify(printStream).println("Thank you! Goodbye");
+        verify(biblioteca).listBooks();
     }
 
     @Test
@@ -61,9 +60,9 @@ public class BibliotecaTests {
     public void shouldPrintCheckoutWhenUserSelectsCheckoutOnMenu() throws IOException {
         when(bufferedReader.readLine()).thenReturn("2", "1", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
-        verify(printStream).println("Thank you! Enjoy the book");
-        verify(printStream).println("Thank you! Goodbye");
+        verify(printStream,atLeastOnce()).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
+        verify(printStream,atLeastOnce()).println("Thank you! Enjoy the book");
+        verify(printStream,atLeastOnce()).println("Thank you! Goodbye");
     }
 
     @Test
@@ -131,4 +130,12 @@ public class BibliotecaTests {
         biblioteca.carryOutMenuSelection();
         assertEquals(biblioteca.getBookById(2).isAvailable(), true);
     }
+
+    @Test
+    public void checkedOutBookShouldNotAppearInListBooks() throws IOException {
+        biblioteca.makeBookUnavailable(2);
+        biblioteca.listBooks();
+        verify(printStream).println("OK, here are the books:\n1: Harry Potter | J.K. Rowling | 1995\n");
+    }
+
 }

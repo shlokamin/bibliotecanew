@@ -34,4 +34,9 @@ public class Book {
     public void setAvailable() {
         availability = true;
     }
+
+    public boolean equals(Book book) {
+        return book.getId() == this.id;
+    }
+
 }
