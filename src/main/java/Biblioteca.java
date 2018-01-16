@@ -10,10 +10,10 @@ import java.util.Set;
 public class Biblioteca {
     private PrintStream printStream;
     private BufferedReader bufferedReader;
-    private ArrayList<Book> books;
+    private Set<Book> books;
     private Menu menu;
 
-    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, ArrayList<Book> books) {
+    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, Set<Book> books) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
         this.books = books;
@@ -27,15 +27,14 @@ public class Biblioteca {
 
     public Set<Integer> getValidIds() {
         Set<Integer> ids = new HashSet<>();
-        for (int i=0;i<books.size();i++) {
-            ids.add(books.get(i).getId());
+        for(Book book : books) {
+            ids.add(book.getId());
         }
         return ids;
     }
 
     public void listBooks() {
-        printStream.println("OK, here are the books:");
-        StringBuilder s = new StringBuilder();
+        StringBuilder s = new StringBuilder("OK, here are the books:\n");
         for (Book book : books) {
             s.append(book.toString() + "\n");
         }
@@ -125,15 +124,18 @@ public class Biblioteca {
         quit();
     }
 
-    public Book getBookById(int i) {
-        return books.get(0);
+    public Book getBookById(int id) {
+        for(Book book : books) {
+            if (id == book.getId()) return book;
+        }
+        return null;
     }
 
     public static void main(String[] args) throws IOException {
         Book book = new Book("Harry Potter", "J.K. Rowling", "1995",1);
         Book book2 = new Book("The Chamber of Secrets", "J.K. Rowling", "1996",2);
         Book book3 = new Book("The Prisoner of Azkaban", "J.K. Rowling", "1998",3);
-        ArrayList<Book> books = new ArrayList<>();
+        Set<Book> books = new HashSet<>();
         books.add(book);
         books.add(book2);
         books.add(book3);

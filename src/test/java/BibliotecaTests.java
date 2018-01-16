@@ -5,11 +5,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.atLeastOnce;
 
 public class BibliotecaTests {
     private PrintStream printStream;
@@ -20,7 +23,7 @@ public class BibliotecaTests {
     public void setUp()throws Exception{
         printStream = mock(PrintStream.class);
         bufferedReader = mock(BufferedReader.class);
-        ArrayList<Book> books = new ArrayList<>();
+        Set<Book> books = new HashSet<>();
         books.add(new Book("Harry Potter", "J.K. Rowling", "1995",1));
         books.add(new Book("Lord of the Rings", "Tolkien", "1970",2));
         biblioteca = new Biblioteca(printStream, bufferedReader, books);
@@ -36,14 +39,14 @@ public class BibliotecaTests {
     @Test
     public void shouldDisplayBookDetails() {
         biblioteca.listBooks();
-        verify(printStream).println("1: Harry Potter | J.K. Rowling | 1995\n" + "2: Lord of the Rings | Tolkien | 1970\n");
+        verify(printStream).println("OK, here are the books:\n1: Harry Potter | J.K. Rowling | 1995\n" + "2: Lord of the Rings | Tolkien | 1970\n");
     }
 
     @Test
     public void whenUserSelectsListBooksListBooksIsCalled() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream).println("1: Harry Potter | J.K. Rowling | 1995\n" + "2: Lord of the Rings | Tolkien | 1970\n");
+        verify(printStream,atLeastOnce()).println("OK, here are the books:\n1: Harry Potter | J.K. Rowling | 1995\n" + "2: Lord of the Rings | Tolkien | 1970\n");
         verify(printStream).println("Thank you! Goodbye");
     }
 
