@@ -13,12 +13,16 @@ public class Biblioteca {
     private Inventory books;
     private Menu menu;
 
-    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, Inventory books) {
+    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
-        this.books = books;
         String[] options = new String[] {"List Books", "Checkout item", "Return a Book"};
         this.menu = new Menu(printStream,bufferedReader,options);
+
+        books = new Inventory();
+        books.addBook("Harry Potter", "J.K. Rowling", "1995");
+        books.addBook("The Chamber of Secrets", "J.K. Rowling", "1996");
+        books.addBook("The Prisoner of Azkaban", "J.K. Rowling", "1998");
     }
 
     public Inventory getBooks() {
@@ -122,12 +126,5 @@ public class Biblioteca {
         quit();
     }
 
-    public static void main(String[] args) throws IOException {
-        Inventory books = new Inventory();
-        books.addBook("Harry Potter", "J.K. Rowling", "1995");
-        books.addBook("The Chamber of Secrets", "J.K. Rowling", "1996");
-        books.addBook("The Prisoner of Azkaban", "J.K. Rowling", "1998");
-        Biblioteca biblioteca = new Biblioteca(System.out, new BufferedReader(new InputStreamReader(System.in)), books);
-        biblioteca.init();
-    }
+
 }
