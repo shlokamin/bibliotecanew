@@ -36,14 +36,14 @@ public class BibliotecaTests {
     @Test
     public void shouldDisplayBookDetails() {
         biblioteca.listBooks();
-        verify(printStream).println("1: Harry Potter | J.K. Rowling | 1995\n" + "2: Lord of the Rings | Tolkien | 1970\n");
+        verify(printStream).println("[available] 1: Harry Potter | J.K. Rowling | 1995\n" + "[available] 2: Lord of the Rings | Tolkien | 1970\n");
     }
 
     @Test
     public void whenUserSelectsListBooksListBooksIsCalled() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream).println("1: Harry Potter | J.K. Rowling | 1995\n" + "2: Lord of the Rings | Tolkien | 1970\n");
+        verify(printStream).println("[available] 1: Harry Potter | J.K. Rowling | 1995\n" + "[available] 2: Lord of the Rings | Tolkien | 1970\n");
         verify(printStream).println("Thank you! Goodbye");
     }
 

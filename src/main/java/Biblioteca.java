@@ -55,6 +55,7 @@ public class Biblioteca {
         } else {
             printStream.println("Invalid book ID");
         }
+        listBooks();
     }
 
     private void returnBook() {
@@ -70,7 +71,7 @@ public class Biblioteca {
         } else {
             printStream.println("Invalid book ID");
         }
-
+        listBooks();
     }
 
     private int getValidUserInput() {
@@ -126,7 +127,7 @@ public class Biblioteca {
     }
 
     public Book getBookById(int i) {
-        return books.get(0);
+        return books.get(i-1);
     }
 
     public static void main(String[] args) throws IOException {
