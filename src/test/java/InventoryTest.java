@@ -15,7 +15,7 @@ public class InventoryTest {
     }
 
     @Test
-    public void shouldIncrementBookIdWithEveryAdditionalBook() {
+    public void shouldIncrementBookIdWithEveryAdditionalMedia() {
         media.addBook("e", "author e", "year e");
         assertEquals(media.getMediaById(5).getId(), 5);
     }

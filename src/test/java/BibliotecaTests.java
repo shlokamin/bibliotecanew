@@ -37,7 +37,7 @@ public class BibliotecaTests {
     @Test
     public void shouldDisplayBookDetails() {
         biblioteca.displayBooks();
-        verify(printStream).println("OK, here are the books:");
+        verify(printStream).println("OK, here are the items:");
         verify(printStream).println("[available] 1: Harry Potter | J.K. Rowling | 1995\n" +
                                     "[available] 2: Lord of the Rings | Tolkien | 1970\n" +
                                     "[available] 3: Twilight | Stephanie Meyers | 2005 | 1\n" +
@@ -47,7 +47,7 @@ public class BibliotecaTests {
     public void whenUserSelectsListBooksListBooksIsCalled() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
+        verify(printStream).println("1: Display Inventory\n2: Checkout item\n3: Return an Item\ntype \"Quit\" to end.");
         verify(printStream).println("[available] 1: Harry Potter | J.K. Rowling | 1995\n" +
                                     "[available] 2: Lord of the Rings | Tolkien | 1970\n" +
                                     "[available] 3: Twilight | Stephanie Meyers | 2005 | 1\n" +
@@ -66,9 +66,9 @@ public class BibliotecaTests {
     public void shouldPrintCheckoutWhenUserSelectsCheckoutOnMenu() throws IOException {
         when(bufferedReader.readLine()).thenReturn("2", "1", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
-        verify(printStream).println("Check out a book by typing in the book id:");
-        verify(printStream).println("Thank you! Enjoy the book");
+        verify(printStream).println("1: Display Inventory\n2: Checkout item\n3: Return an Item\ntype \"Quit\" to end.");
+        verify(printStream).println("Check out an item by typing in its id:");
+        verify(printStream).println("Thank you! Enjoy the item.");
         verify(printStream).println("Thank you! Goodbye");
     }
 
@@ -76,24 +76,24 @@ public class BibliotecaTests {
     public void shouldPrintSuccessMessageWhenUserChecksOutBookWithId1() throws IOException {
         when(bufferedReader.readLine()).thenReturn("1");
         biblioteca.checkOutItem();
-        verify(printStream).println("Check out a book by typing in the book id:");
-        verify(printStream).println("Thank you! Enjoy the book");
+        verify(printStream).println("Check out an item by typing in its id:");
+        verify(printStream).println("Thank you! Enjoy the item.");
     }
 
     @Test
     public void shouldPrintSuccessMessageWhenUserChecksOutBookWithId2() throws IOException {
         when(bufferedReader.readLine()).thenReturn("2");
         biblioteca.checkOutItem();
-        verify(printStream).println("Check out a book by typing in the book id:");
-        verify(printStream).println("Thank you! Enjoy the book");
+        verify(printStream).println("Check out a book by typing in its id:");
+        verify(printStream).println("Thank you! Enjoy the item.");
     }
 
     @Test
     public void shouldPrintErrorMessageWhenUserChecksOutMediaWithId7() throws IOException {
         when(bufferedReader.readLine()).thenReturn("7");
         biblioteca.checkOutItem();
-        verify(printStream).println("Check out a book by typing in the book id:");
-        verify(printStream).println("Invalid book ID");
+        verify(printStream).println("Check out an item by typing in its id:");
+        verify(printStream).println("Invalid item ID");
     }
 
     @Test
@@ -105,40 +105,49 @@ public class BibliotecaTests {
 
     @Test
     public void shouldPrintErrorIfUserTriesToCheckOutUnavailableBook() throws IOException {
-        biblioteca.makeBookUnavailable(2);
+        biblioteca.makeMediaUnavailable(2);
         when(bufferedReader.readLine()).thenReturn("2");
         biblioteca.checkOutItem();
-        verify(printStream).println("Check out a book by typing in the book id:");
-        verify(printStream).println("That book is not available.");
+        verify(printStream).println("Check out an item by typing in its id:");
+        verify(printStream).println("That item is not available.");
     }
 
     @Test
     public void shouldPrintSuccessMessageWhenUserReturnsCheckedOutBook() throws IOException {
-        biblioteca.makeBookUnavailable(2);
+        biblioteca.makeMediaUnavailable(2);
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
-        verify(printStream).println("Return a book by typing in the book id:");
-        verify(printStream).println("Thank you for returning the book.");
+        verify(printStream).println("1: Display Inventory\n2: Checkout item\n3: Return an Item\ntype \"Quit\" to end.");
+        verify(printStream).println("Return an item by typing in its id:");
+        verify(printStream).println("Thank you for returning the item.");
         verify(printStream).println("Thank you! Goodbye");
+    }
 
+    @Test
+    public void shouldPrintSuccessMessageWhenUserReturnsCheckedOutMovie() throws IOException {
+        biblioteca.makeMediaUnavailable(4);
+        when(bufferedReader.readLine()).thenReturn("3", "4", "Quit");
+        biblioteca.carryOutMenuSelection();
+        verify(printStream).println("1: Display Inventory\n2: Checkout item\n3: Return an Item\ntype \"Quit\" to end.");
+        verify(printStream).println("Return an item by typing in its id:");
+        verify(printStream).println("Thank you for returning the item.");
+        verify(printStream).println("Thank you! Goodbye");
     }
 
     @Test
     public void shouldPrintErrorMessageWhenUserTriesToReturnAvailableBook() throws IOException {
-        biblioteca.makeBookAvailable(2);
+        biblioteca.makeMediaAvailable(2);
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
-        verify(printStream).println("1: List Books\n2: Checkout item\n3: Return a Book\ntype \"Quit\" to end.");
-        verify(printStream).println("Return a book by typing in the book id:");
-        verify(printStream).println("That is not a valid book to return.");
+        verify(printStream).println("1: Display Inventory\n2: Checkout item\n3: Return an Item\ntype \"Quit\" to end.");
+        verify(printStream).println("Return an item by typing in its id:");
+        verify(printStream).println("That is not a valid item to return.");
         verify(printStream).println("Thank you! Goodbye");
-
     }
 
     @Test
     public void bookShouldBeAvailableWhenUserReturnsIt() throws IOException {
-        biblioteca.makeBookUnavailable(2);
+        biblioteca.makeMediaUnavailable(2);
         when(bufferedReader.readLine()).thenReturn("3", "2", "Quit");
         biblioteca.carryOutMenuSelection();
         assertEquals(biblioteca.getBooks().getMediaById(2).isAvailable(), true);

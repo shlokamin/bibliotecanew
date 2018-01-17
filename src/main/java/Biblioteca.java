@@ -5,20 +5,20 @@ import java.io.PrintStream;
 public class Biblioteca {
     private PrintStream printStream;
     private BufferedReader bufferedReader;
-    private Inventory books;
+    private Inventory medias;
     private Menu menu;
 
-    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, Inventory books) {
+    public Biblioteca(PrintStream printStream, BufferedReader bufferedReader, Inventory medias) {
         this.printStream = printStream;
         this.bufferedReader = bufferedReader;
 
-        String[] options = new String[] {"List Books", "Checkout item", "Return a Book"};
+        String[] options = new String[] {"Display Inventory", "Checkout item", "Return an Item"};
         this.menu = new Menu(printStream,bufferedReader,options);
-        this.books = books;
+        this.medias = medias;
     }
 
     public Inventory getBooks() {
-        return books;
+        return medias;
     }
 
     public void displayWelcomeMessage() {
@@ -26,38 +26,38 @@ public class Biblioteca {
     }
 
     public void displayBooks(){
-        printStream.println("OK, here are the books:");
-        printStream.println(books.toString());
+        printStream.println("OK, here are the items:");
+        printStream.println(medias.toString());
     }
 
     public void checkOutItem() {
-        printStream.println("Check out a book by typing in the book id:");
-        int bookId = getValidUserInput();
-        if (books.isValidId(bookId)) {
-            if (!books.getMediaById(bookId).isAvailable()) {
-                printStream.println("That book is not available.");
+        printStream.println("Check out an item by typing in its id:");
+        int mediaId = getValidUserInput();
+        if (medias.isValidId(mediaId)) {
+            if (!medias.getMediaById(mediaId).isAvailable()) {
+                printStream.println("That item is not available.");
             } else {
-                makeBookUnavailable(bookId);
-                printStream.println("Thank you! Enjoy the book");
+                makeMediaUnavailable(mediaId);
+                printStream.println("Thank you! Enjoy the item.");
             }
         } else {
-            printStream.println("Invalid book ID");
+            printStream.println("Invalid media ID");
         }
         displayBooks();
     }
 
     private void returnBook() {
-        printStream.println("Return a book by typing in the book id:");
-        int bookId = getValidUserInput();
-        if (books.isValidId(bookId)) {
-            if (books.getMediaById(bookId).isAvailable()) {
-                printStream.println("That is not a valid book to return.");
+        printStream.println("Return an item by typing in its id:");
+        int mediaId = getValidUserInput();
+        if (medias.isValidId(mediaId)) {
+            if (medias.getMediaById(mediaId).isAvailable()) {
+                printStream.println("That is not a valid item to return.");
             } else {
-                makeBookAvailable(bookId);
-                printStream.println("Thank you for returning the book.");
+                makeMediaAvailable(mediaId);
+                printStream.println("Thank you for returning the item.");
             }
         } else {
-            printStream.println("Invalid book ID");
+            printStream.println("Invalid item ID");
         }
         displayBooks();
     }
@@ -80,12 +80,12 @@ public class Biblioteca {
         }
     }
 
-    public void makeBookUnavailable(int bookId) {
-        books.getMediaById(bookId).setUnavailable();
+    public void makeMediaUnavailable(int mediaId) {
+        medias.getMediaById(mediaId).setUnavailable();
     }
 
-    public void makeBookAvailable(int bookId) {
-        books.getMediaById(bookId).setAvailable();
+    public void makeMediaAvailable(int mediaId) {
+        medias.getMediaById(mediaId).setAvailable();
     }
 
     public void init() throws IOException {

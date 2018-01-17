@@ -15,13 +15,6 @@ public class BookTest {
         assertEquals(book.toString(), bookDetails);
     }
 
-    @Test
-    public void shouldIncrementBookIdWhenNewBookIsInstantiated(){
-        Book book1 = new Book("Harry Potter a", "J.K. Rowling", "1995",1);
-        Book book2 = new Book("Harry Potter b", "J.K. Rowling", "1995",2);
-        assertEquals(book2.getId(), 2);
 
-
-    }
 
 }
